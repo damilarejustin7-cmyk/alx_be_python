@@ -21,4 +21,5 @@ if time_bound == "yes":
     message += " that requires immediate attention today!"
 
 # Print the final reminder
-print(message)
+print(f"Reminder: {message}")
+
