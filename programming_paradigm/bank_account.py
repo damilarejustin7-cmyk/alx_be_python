@@ -1,21 +1,29 @@
 # Simple bank account implementation using Object-Oriented Programming (OOP) paradigm
 
+class InsufficientFundsError(Exception):
+    """Custom exception raised for withdrawals exceeding the available balance."""
+    pass
+
 class BankAccount:
-    def __init__(self, initial_balance=0):
-        self.balance = initial_balance
+    def __init__(self, initial_balance=0.0):
+        """Initializes the account with a starting balance."""
+        if initial_balance < 0:
+            raise ValueError("Initial balance cannot be negative.")
+        self.balance = initial_balance 
 
     def deposit(self, amount):
         if amount > 0:
             self.balance += amount
 
     def withdraw(self, amount):
+        if amount <= 0:
+            raise ValueError("Withdrawal amount must be positive.")
+
         if amount <= self.balance:
             self.balance -= amount
-            print(f"Wthdrew: ${amount:.2f}")  # Added print statement for withdrawal
             return True
         else:
-            print("Insufficient funds.")      # Added print statement for insufficient funds
-            return False
+            raise InsufficientFundsError("Cannot withdraw: Insufficient funds.")
 
     def display_balance(self):
         print(f"Current Balance: ${self.balance:.2f}")
